@@ -29,6 +29,11 @@ const Login = () => {
     setError("");
 
     // Login API Call
+    try {
+      
+    } catch (error) {
+      
+    }
   };
 
   return <AuthLayout>

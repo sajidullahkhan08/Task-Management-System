@@ -1,22 +1,24 @@
 import React, { useState } from 'react'
 import AuthLayout from '../../components/layouts/AuthLayout'
 import ProfilePhotoSelector from '../../components/layouts/Inputs/ProfilePhotoSelector'
-
+import Input from '../../components/layouts/Inputs/Input'
+import { Link } from 'react-router-dom'
+import { validateEmail } from '../../utils/helper'
 
 const SignUp = () => {
-  const {profilePic, setProfilePic} = useState(null);
-  const {fullName, setFullName} = useState("");
-  const {email, setEmail} = useState("");
-  const {password, setPassword} = useState("");
-  const {adminInviteToken, setAdminInviteToken} = useState('');
+  const [profilePic, setProfilePic] = useState(null);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [adminInviteToken, setAdminInviteToken] = useState('');
 
-  const {error, setError} = useState(null);
+  const [error, setError] = useState(null);
 
     // Handle SignUp Form Submit
     const handleSignUp = async (e) => {
       e.preventDefault();
   
-      if (fullName) {
+      if (!fullName) {
         setError("Please enter full name.");
         return;
       }
@@ -46,13 +48,56 @@ const SignUp = () => {
         <form onSubmit={handleSignUp}>
           <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
 
-          <div className="gridd grid-cols-1 md:grid=cols-2 gap-4 ">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Input
+              value={fullName}
+              onChange={({ target }) => setFullName(target.value)}
+              label="Full Name"
+              placeholder="Sajidullah Khan"
+              type="text"
+            />
 
+            <Input
+              value={email}
+              onChange={({ target }) => setEmail(target.value)}
+              label="Email Address"
+              placeholder="sajid@example.com"
+              type="text"
+            />
+
+          <Input
+            value={password}
+            onChange={({ target }) => setPassword(target.value)}
+            label="Password"
+            placeholder="Minimum 8 characters"
+            type="password"
+          />
+
+          <Input
+            value={adminInviteToken}
+            onChange={({ target }) => setAdminInviteToken(target.value)}
+            label="Admin Invite Token"
+            placeholder="6 Digit Code"
+            type="text"
+          />
           </div>
+
+          {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
+        <button type="submit" className="btn-primary">
+          SIGN UP
+        </button>
+
+        <p className="text-[13px] text-slate-800 mt-3">
+          Already an account?{" "}
+          <Link className="font-medium text-primary underline" to="/login">
+            Login
+          </Link>
+        </p>
+
         </form>
       </div>
     </AuthLayout>
   )
-}
+};
 
 export default SignUp
