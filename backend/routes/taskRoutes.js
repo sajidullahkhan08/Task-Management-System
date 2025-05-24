@@ -1,28 +1,34 @@
-const express = require("express");
-const { protect, adminOnly } = require("../middlewares/authMiddleware");
-const {
-    getTasks,
-    getTaskById,
-    createTask,
-    updateTask,
-    deleteTask,
-    updateTaskStatus,
-    updateTaskChecklist,
-    getDashboardData,
-    getUserDashboardData,
-} = require("../controllers/taskController");
+import express from 'express';
+import { check } from 'express-validator';
+import {
+  getTasks,
+  getTaskById,
+  createTask,
+  updateTask,
+  deleteTask,
+} from '../controllers/taskController.js';
+import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// Task Management Routes
-router.get("/dashboard-data", protect, getDashboardData);
-router.get("/user-dashboard-data", protect, getUserDashboardData);
-router.get("/", protect, getTasks); // Get all tasks (Admin: all, User: assigned)
-router.get("/:id", protect, getTaskById); // Get task by ID
-router.post("/", protect, adminOnly, createTask); // Create a new task (Admin only)
-router.put("/:id", protect, updateTask); // Update task details
-router.delete("/:id", protect, adminOnly, deleteTask); // Delete a task (Admin only)
-router.put("/:id/status", protect, updateTaskStatus); // Update task status
-router.put("/:id/todo", protect, updateTaskChecklist); // Update task checklist
+router
+  .route('/')
+  .get(protect, getTasks)
+  .post(
+    [
+      protect,
+      check('title', 'Title is required').not().isEmpty(),
+      check('status', 'Status must be Pending, In Progress, or Completed')
+        .optional()
+        .isIn(['Pending', 'In Progress', 'Completed']),
+    ],
+    createTask
+  );
 
-module.exports = router;
+router
+  .route('/:id')
+  .get(protect, getTaskById)
+  .put(protect, updateTask)
+  .delete(protect, deleteTask);
+
+export default router;

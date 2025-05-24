@@ -1,11 +1,26 @@
-const express = require("express");
-const { adminOnly, protect } = require("../middlewares/authMiddleware");
-const { getUsers, getUserById } = require("../controllers/userController");
+import express from 'express';
+import { check } from 'express-validator';
+import {
+  registerUser,
+  authUser,
+  getUserProfile,
+} from '../controllers/userController.js';
+import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// User Management Routes
-router.get("/", protect, adminOnly, getUsers); // Get all users (Admin only)
-router.get("/:id", protect, getUserById); // Get a specific user
+router.post(
+  '/',
+  [
+    check('name', 'Name is required').not().isEmpty(),
+    check('email', 'Please include a valid email').isEmail(),
+    check('password', 'Password must be at least 6 characters').isLength({
+      min: 6,
+    }),
+  ],
+  registerUser
+);
+router.post('/login', authUser);
+router.route('/profile').get(protect, getUserProfile);
 
-module.exports = router;
+export default router;
