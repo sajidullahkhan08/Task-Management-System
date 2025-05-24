@@ -1,6 +1,6 @@
 # Task Management System
 
-This is a full-stack Task Management System project developed as an learning internship task at DevelopersHub Corporation by Sajidullah Khan (ID: DHC-1508). The application allows users to manage their tasks efficiently with features to create, update, delete, and filter tasks.
+This is a full-stack Task Management System project developed as a learning internship task at DevelopersHub Corporation by Sajidullah Khan (ID: DHC-1508). The application allows users to manage their tasks efficiently with features to create, update, delete, and filter tasks.
 
 ---
 
@@ -88,6 +88,31 @@ All backend API endpoints require authentication via JWT.
 
 ---
 
+## Features
+
+- User registration and login with JWT authentication
+- Create, read, update, and delete tasks
+- Filter tasks by status (Pending, In Progress, Completed)
+- Search tasks by title or description
+- Task progress bar showing percentage of completed tasks
+- Responsive design with Tailwind CSS
+- Protected routes for authenticated users only
+- Error and success alerts for user feedback
+
+---
+
+## Environment Variables
+
+Create a `.env` file in the backend directory with the following variables:
+
+```
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
+PORT=5000
+```
+
+---
+
 ## Installation Instructions
 
 ### Backend Setup
@@ -102,7 +127,7 @@ All backend API endpoints require authentication via JWT.
    npm install
    ```
 
-3. Configure environment variables (e.g., MongoDB URI, JWT secret) as needed.
+3. Create a `.env` file with the required environment variables (see above).
 
 4. Start the backend server:
    ```bash
@@ -130,21 +155,10 @@ All backend API endpoints require authentication via JWT.
 
 ## Usage
 
-- Open the frontend application in your browser (usually at `http://localhost:3000`).
+- Open the frontend application in your browser (usually at `http://localhost:5173`).
 - Register a new user or log in with existing credentials.
-- Manage your tasks by creating, updating, deleting, and filtering them.
+- Manage your tasks by creating, updating, deleting, filtering, and searching.
+- View task progress with the progress bar.
 - The backend API handles all data persistence and authentication.
 
 ---
-
-## Contact
-
-For any questions or feedback, please contact:
-
-**Sajidullah Khan**  
-DeveloperHub Corporation  
-ID: DHC-1508
-
----
-
-Thank you for exploring this Task Management System project!
