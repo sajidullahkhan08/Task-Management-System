@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckSquare, Github, Twitter } from 'lucide-react';
+import { CheckSquare, Github, Linkedin } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
@@ -22,18 +22,22 @@ const Footer: React.FC = () => {
           
           <div className="flex space-x-4">
             <a
-              href="#"
+              href="https://github.com/sajidullahkhan08"
               className="text-gray-300 hover:text-white transition-colors"
               aria-label="GitHub"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <Github className="h-5 w-5" />
             </a>
             <a
-              href="#"
+              href="https://www.linkedin.com/in/sajidullah-khan-86142b275"
               className="text-gray-300 hover:text-white transition-colors"
-              aria-label="Twitter"
+              aria-label="LinkedIn"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <Twitter className="h-5 w-5" />
+              <Linkedin className="h-5 w-5" />
             </a>
           </div>
         </div>

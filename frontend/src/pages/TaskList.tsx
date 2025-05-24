@@ -7,11 +7,20 @@ import TaskFilter from '../components/tasks/TaskFilter';
 import ProgressBar from '../components/tasks/ProgressBar';
 import Alert from '../components/common/Alert';
 
+interface Task {
+  _id: string;
+  title: string;
+  description?: string;
+  status: 'Pending' | 'In Progress' | 'Completed';
+  dueDate?: string;
+  createdAt: string;
+}
+
 const TaskList: React.FC = () => {
   const { tasks, getTasks, deleteTask, error, success, getTaskProgress } = useContext(TaskContext);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('All');
-  const [filteredTasks, setFilteredTasks] = useState([]);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [statusFilter, setStatusFilter] = useState<string>('All');
+  const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
 
   useEffect(() => {
     getTasks();
@@ -39,14 +48,14 @@ const TaskList: React.FC = () => {
     setFilteredTasks(result);
   }, [tasks, statusFilter, searchTerm]);
 
-  const handleDeleteTask = async (id) => {
+  const handleDeleteTask = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this task?')) {
       await deleteTask(id);
     }
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto bg-gray-50 p-6 rounded-lg shadow-sm">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">My Tasks</h1>
         <Link to="/tasks/new" className="btn btn-primary flex items-center">
