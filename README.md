@@ -118,36 +118,30 @@ PORT=5000
 ### Backend Setup
 
 1. Navigate to the backend directory:
-   ```bash
    cd backend
    ```
 
 2. Install dependencies:
-   ```bash
    npm install
    ```
 
 3. Create a `.env` file with the required environment variables (see above).
 
 4. Start the backend server:
-   ```bash
    node server.js
    ```
 
 ### Frontend Setup
 
 1. Navigate to the frontend directory:
-   ```bash
    cd frontend
    ```
 
 2. Install dependencies:
-   ```bash
    npm install
    ```
 
 3. Start the frontend development server:
-   ```bash
    npm run dev
    ```
 
