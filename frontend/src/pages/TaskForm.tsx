@@ -7,7 +7,7 @@ import Alert from '../components/common/Alert';
 const TaskForm: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { task, getTask, createTask, updateTask, loading, error, success, clearTask, clearError } = useContext(TaskContext);
+  const { task, getTask, createTask, updateTask, loading, error, success, clearTask } = useContext(TaskContext);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -31,13 +31,16 @@ const TaskForm: React.FC = () => {
 
     return () => {
       clearTask();
-      clearError();
     };
+<<<<<<< HEAD
 <<<<<<< HEAD
   }, [id, isEditMode, getTask, clearTask, clearError]);
 =======
   }, [id]);
 >>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
+=======
+  }, [id, isEditMode, getTask, clearTask]);
+>>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
 
   useEffect(() => {
     if (task && isEditMode) {
@@ -52,11 +55,7 @@ const TaskForm: React.FC = () => {
 
   useEffect(() => {
     if (success) {
-      const timer = setTimeout(() => {
-        navigate('/tasks');
-      }, 1000);
-      
-      return () => clearTimeout(timer);
+      navigate('/tasks');
     }
   }, [success, navigate]);
 
@@ -73,11 +72,6 @@ const TaskForm: React.FC = () => {
         ...formErrors,
         title: '',
       });
-    }
-
-    // Clear global error when user makes changes
-    if (error) {
-      clearError();
     }
   };
 
@@ -97,10 +91,10 @@ const TaskForm: React.FC = () => {
   };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const handleSubmit = async (e: React.FormEvent) => {
-=======
   const handleSubmit = (e) => {
->>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
+
     e.preventDefault();
 
     if (!validateForm()) {
@@ -114,9 +108,9 @@ const TaskForm: React.FC = () => {
 
 <<<<<<< HEAD
     if (isEditMode && id) {
-      await updateTask(id, taskData);
+      updateTask(id, taskData);
     } else {
-      await createTask(taskData);
+      createTask(taskData);
     }
   };
 
@@ -134,8 +128,7 @@ const TaskForm: React.FC = () => {
           {isEditMode ? 'Edit Task' : 'Create New Task'}
         </h1>
 
-        {error && <Alert type="error" message={error} onClose={clearError} />}
-        {success && <Alert type="success" message={`Task ${isEditMode ? 'updated' : 'created'} successfully!`} />}
+        {error && <Alert type="error" message={error} />}
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -150,7 +143,6 @@ const TaskForm: React.FC = () => {
               onChange={handleChange}
               className={`form-input ${formErrors.title ? 'border-red-500' : ''}`}
               placeholder="Enter task title"
-              disabled={loading}
             />
             {formErrors.title && (
               <p className="text-red-500 text-sm mt-1">{formErrors.title}</p>
@@ -169,7 +161,6 @@ const TaskForm: React.FC = () => {
               rows={4}
               className="form-input"
               placeholder="Enter task description (optional)"
-              disabled={loading}
             ></textarea>
           </div>
 
@@ -184,7 +175,6 @@ const TaskForm: React.FC = () => {
                 value={formData.status}
                 onChange={handleChange}
                 className="form-input"
-                disabled={loading}
               >
                 <option value="Pending">Pending</option>
                 <option value="In Progress">In Progress</option>
@@ -203,7 +193,6 @@ const TaskForm: React.FC = () => {
                 value={formData.dueDate}
                 onChange={handleChange}
                 className="form-input"
-                disabled={loading}
               />
             </div>
           </div>
