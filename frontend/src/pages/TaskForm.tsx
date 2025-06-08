@@ -22,20 +22,14 @@ const TaskForm: React.FC = () => {
 
   const isEditMode = !!id;
 
-  useEffect(() => {
-    if (isEditMode) {
-      getTask(id);
-    } else {
-      clearTask();
-    }
-
-    return () => {
-      clearTask();
-    };
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-  }, [id, isEditMode, getTask, clearTask, clearError]);
+  }, [id]);
+>>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
+=======
+  }, [id, isEditMode, getTask, clearTask]);
+>>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
+=======
+  }, [id, isEditMode, getTask, clearTask]);
+>>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
 =======
   }, [id]);
 >>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)

@@ -58,15 +58,21 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const { user } = useContext(AuthContext);
 
+    if (user && user.token) {
+      config.headers.Authorization = `Bearer ${user.token}`;
+    }
+
+    return config;
+  };
+=======
   // Set up axios config with auth token
-  const getConfig = () => {
+  const getConfig = useCallback(() => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
       },
     };
 
-<<<<<<< HEAD
     if (user && user.token) {
       config.headers.Authorization = `Bearer ${user.token}`;
     }
