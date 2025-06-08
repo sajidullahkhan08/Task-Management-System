@@ -66,6 +66,7 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
       },
     };
 
+<<<<<<< HEAD
     if (user && user.token) {
       config.headers.Authorization = `Bearer ${user.token}`;
     }
@@ -75,6 +76,9 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Get all tasks
 <<<<<<< HEAD
+=======
+  // Get all tasks
+>>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
   const getTasks = useCallback(async () => {
     try {
       setLoading(true);
@@ -99,6 +103,7 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   }, [user, isAuthenticated, getConfig]);
 
   // Get single task
@@ -114,6 +119,12 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Get single task
   const getTask = async (id: string) => {
 >>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
+=======
+  }, [user, getConfig]);
+
+  // Get single task
+  const getTask = useCallback(async (id: string) => {
+>>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
 =======
   }, [user, getConfig]);
 
@@ -136,6 +147,7 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   }, [isAuthenticated, user, getConfig]);
 
   // Create new task
@@ -151,6 +163,12 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Create new task
   const createTask = async (taskData: Partial<Task>) => {
 >>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
+=======
+  }, [getConfig]);
+
+  // Create new task
+  const createTask = useCallback(async (taskData: Partial<Task>) => {
+>>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
 =======
   }, [getConfig]);
 
@@ -181,6 +199,7 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   }, [isAuthenticated, user, getConfig]);
 
   // Update task
@@ -196,6 +215,12 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Update task
   const updateTask = async (id: string, taskData: Partial<Task>) => {
 >>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
+=======
+  }, [getConfig]);
+
+  // Update task
+  const updateTask = useCallback(async (id: string, taskData: Partial<Task>) => {
+>>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
 =======
   }, [getConfig]);
 
@@ -231,6 +256,7 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   }, [isAuthenticated, user, getConfig]);
 
   // Delete task
@@ -246,6 +272,12 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Delete task
   const deleteTask = async (id: string) => {
 >>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
+=======
+  }, [getConfig]);
+
+  // Delete task
+  const deleteTask = useCallback(async (id: string) => {
+>>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
 =======
   }, [getConfig]);
 
@@ -276,10 +308,14 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   }, [isAuthenticated, user, getConfig]);
 =======
   };
 >>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
+=======
+  }, [getConfig]);
+>>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
 =======
   }, [getConfig]);
 >>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
@@ -289,7 +325,10 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setTask(null);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     setError(null);
+=======
+>>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
 =======
 >>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
   }, []);
@@ -347,7 +386,11 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   }, [isAuthenticated, user, getTasks]);
+=======
+  }, [user, getTasks]);
+>>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
 
   }, [user]);
 

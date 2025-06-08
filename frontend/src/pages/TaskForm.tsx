@@ -34,10 +34,14 @@ const TaskForm: React.FC = () => {
     };
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   }, [id, isEditMode, getTask, clearTask, clearError]);
 =======
   }, [id]);
 >>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
+=======
+  }, [id, isEditMode, getTask, clearTask]);
+>>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
 =======
   }, [id, isEditMode, getTask, clearTask]);
 >>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
@@ -92,9 +96,13 @@ const TaskForm: React.FC = () => {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   const handleSubmit = async (e: React.FormEvent) => {
   const handleSubmit = (e) => {
 
+=======
+  const handleSubmit = (e: React.FormEvent) => {
+>>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
     e.preventDefault();
 
     if (!validateForm()) {
