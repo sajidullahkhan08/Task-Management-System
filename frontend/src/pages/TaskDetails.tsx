@@ -7,15 +7,15 @@ import Alert from '../components/common/Alert';
 import ProgressBar from '../components/tasks/ProgressBar';
 
 const TaskDetails: React.FC = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { task, getTask, deleteTask, loading, error } = useContext(TaskContext);
+  const { task, getTask, deleteTask, loading, error, clearError } = useContext(TaskContext);
 
   useEffect(() => {
     if (id) {
       getTask(id);
     }
-  }, [id]);
+  }, [id, getTask]);
 
   const handleDelete = async () => {
     if (id && window.confirm('Are you sure you want to delete this task?')) {
@@ -60,11 +60,31 @@ const TaskDetails: React.FC = () => {
   }
 
   if (error) {
-    return <Alert type="error" message={error} />;
+    return (
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-6">
+          <Link to="/tasks" className="flex items-center text-blue-600 hover:text-blue-800">
+            <ArrowLeft className="h-5 w-5 mr-1" />
+            Back to Tasks
+          </Link>
+        </div>
+        <Alert type="error" message={error} onClose={clearError} />
+      </div>
+    );
   }
 
   if (!task) {
-    return <Alert type="error" message="Task not found" />;
+    return (
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-6">
+          <Link to="/tasks" className="flex items-center text-blue-600 hover:text-blue-800">
+            <ArrowLeft className="h-5 w-5 mr-1" />
+            Back to Tasks
+          </Link>
+        </div>
+        <Alert type="error" message="Task not found" />
+      </div>
+    );
   }
 
   return (
@@ -94,7 +114,7 @@ const TaskDetails: React.FC = () => {
           </div>
         </div>
 
-          <div className="flex flex-wrap gap-4 mb-6">
+        <div className="flex flex-wrap gap-4 mb-6">
           <span className={`badge ${getStatusBadgeClass(task.status)}`}>
             {task.status}
           </span>

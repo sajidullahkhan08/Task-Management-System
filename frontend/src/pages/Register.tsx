@@ -4,29 +4,15 @@ import { UserPlus } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 import Alert from '../components/common/Alert';
 
-interface FormData {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
-interface FormErrors {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
 const Register: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
   });
 
-  const [formErrors, setFormErrors] = useState<FormErrors>({
+  const [formErrors, setFormErrors] = useState({
     name: '',
     email: '',
     password: '',
@@ -42,7 +28,7 @@ const Register: React.FC = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -50,7 +36,7 @@ const Register: React.FC = () => {
     });
 
     // Clear error when user types
-    if (formErrors[name as keyof FormErrors]) {
+    if (formErrors[name]) {
       setFormErrors({
         ...formErrors,
         [name]: '',
@@ -62,9 +48,9 @@ const Register: React.FC = () => {
     }
   };
 
-  const validateForm = (): boolean => {
+  const validateForm = () => {
     let isValid = true;
-    const errors: FormErrors = {
+    const errors = {
       name: '',
       email: '',
       password: '',
@@ -105,7 +91,7 @@ const Register: React.FC = () => {
     return isValid;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) {

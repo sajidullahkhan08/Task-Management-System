@@ -4,17 +4,15 @@ import { format } from 'date-fns';
 import { Clock, Edit, Trash2 } from 'lucide-react';
 import ProgressBar from './ProgressBar';
 
-interface Task {
-  _id: string;
-  title: string;
-  description?: string;
-  status: 'Pending' | 'In Progress' | 'Completed';
-  dueDate?: string;
-  createdAt: string;
-}
-
 interface TaskItemProps {
-  task: Task;
+  task: {
+    _id: string;
+    title: string;
+    description?: string;
+    status: 'Pending' | 'In Progress' | 'Completed';
+    dueDate?: string;
+    createdAt: string;
+  };
   onDelete: (id: string) => void;
 }
 
@@ -49,7 +47,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete }) => {
   return (
     <div className="card p-4 mb-4 hover:shadow-lg transition-shadow duration-200">
       <div className="flex justify-between items-start">
-        <div className="flex-1">
+        <div>
           <h3 className="text-lg font-semibold mb-1">{task.title}</h3>
           {task.description && (
             <p className="text-gray-600 mb-2 line-clamp-2">{task.description}</p>
@@ -70,7 +68,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete }) => {
             </span>
           </div>
         </div>
-        <div className="flex space-x-2 ml-4">
+        <div className="flex space-x-2">
           <Link
             to={`/tasks/edit/${task._id}`}
             className="p-2 text-blue-600 hover:text-blue-800 transition-colors"

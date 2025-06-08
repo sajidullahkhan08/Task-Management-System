@@ -4,23 +4,13 @@ import { LogIn } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 import Alert from '../components/common/Alert';
 
-interface FormData {
-  email: string;
-  password: string;
-}
-
-interface FormErrors {
-  email: string;
-  password: string;
-}
-
 const Login: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
 
-  const [formErrors, setFormErrors] = useState<FormErrors>({
+  const [formErrors, setFormErrors] = useState({
     email: '',
     password: '',
   });
@@ -34,7 +24,7 @@ const Login: React.FC = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -42,7 +32,7 @@ const Login: React.FC = () => {
     });
 
     // Clear error when user types
-    if (formErrors[name as keyof FormErrors]) {
+    if (formErrors[name]) {
       setFormErrors({
         ...formErrors,
         [name]: '',
@@ -54,9 +44,9 @@ const Login: React.FC = () => {
     }
   };
 
-  const validateForm = (): boolean => {
+  const validateForm = () => {
     let isValid = true;
-    const errors: FormErrors = {
+    const errors = {
       email: '',
       password: '',
     };
@@ -80,7 +70,7 @@ const Login: React.FC = () => {
     return isValid;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) {

@@ -39,19 +39,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     const loadUser = async () => {
-      const storedUser = localStorage.getItem('user');
-      
-      if (storedUser) {
-        try {
+      try {
+        const storedUser = localStorage.getItem('user');
+        
+        if (storedUser) {
           const parsedUser = JSON.parse(storedUser);
-          setUser(parsedUser);
-          setIsAuthenticated(true);
-        } catch (err) {
-          localStorage.removeItem('user');
+          
+          // Validate the stored user data
+          if (parsedUser && parsedUser._id && parsedUser.token) {
+            setUser(parsedUser);
+            setIsAuthenticated(true);
+          } else {
+            localStorage.removeItem('user');
+          }
         }
+      } catch (err) {
+        console.error('Error loading user from localStorage:', err);
+        localStorage.removeItem('user');
+      } finally {
+        setLoading(false);
       }
-      
-      setLoading(false);
     };
 
     loadUser();
@@ -59,6 +66,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const register = async (name: string, email: string, password: string) => {
     try {
+      setLoading(true);
+      setError(null);
+      
       const res = await axios.post(`${API_URL}/api/users`, {
         name,
         email,
@@ -68,19 +78,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       localStorage.setItem('user', JSON.stringify(res.data));
       setUser(res.data);
       setIsAuthenticated(true);
-      setError(null);
     } catch (err: any) {
+      console.error('Registration error:', err);
       setError(
-        err.response && err.response.data.message
-          ? err.response.data.message
-          : 'Registration failed'
+        err.response?.data?.message || 'Registration failed'
       );
       setIsAuthenticated(false);
+    } finally {
+      setLoading(false);
     }
   };
 
   const login = async (email: string, password: string) => {
     try {
+      setLoading(true);
+      setError(null);
+      
       const res = await axios.post(`${API_URL}/api/users/login`, {
         email,
         password,
@@ -89,14 +102,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       localStorage.setItem('user', JSON.stringify(res.data));
       setUser(res.data);
       setIsAuthenticated(true);
-      setError(null);
     } catch (err: any) {
+      console.error('Login error:', err);
       setError(
-        err.response && err.response.data.message
-          ? err.response.data.message
-          : 'Invalid credentials'
+        err.response?.data?.message || 'Invalid credentials'
       );
       setIsAuthenticated(false);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -104,6 +117,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem('user');
     setUser(null);
     setIsAuthenticated(false);
+    setError(null);
   };
 
   const clearError = () => {

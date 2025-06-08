@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext, useCallback } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from './AuthContext';
 import { API_URL } from '../config';
@@ -52,74 +52,103 @@ export const TaskContext = createContext<TaskContextType>({
 export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [task, setTask] = useState<Task | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
 
-  const { user } = useContext(AuthContext);
+  const { user, isAuthenticated } = useContext(AuthContext);
 
   // Set up axios config with auth token
-  const getConfig = useCallback(() => {
+  const getConfig = () => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        ...(user?.token && { Authorization: `Bearer ${user.token}` }),
       },
     };
+
+    if (user && user.token) {
+      config.headers.Authorization = `Bearer ${user.token}`;
+    }
+
     return config;
-  }, [user]);
+  };
 
   // Get all tasks
+<<<<<<< HEAD
   const getTasks = useCallback(async () => {
+    if (!isAuthenticated || !user) {
+      setTasks([]);
+      setLoading(false);
+      return;
+    }
+
     try {
       setLoading(true);
-      
-      if (!user) {
-        setTasks([]);
-        setLoading(false);
-        return;
-      }
+      setError(null);
       
       const res = await axios.get(`${API_URL}/api/tasks`, getConfig());
       setTasks(res.data);
-      setError(null);
     } catch (err: any) {
+      console.error('Error fetching tasks:', err);
       setError(
-        err.response && err.response.data.message
-          ? err.response.data.message
-          : 'Failed to fetch tasks'
+        err.response?.data?.message || 'Failed to fetch tasks'
       );
     } finally {
       setLoading(false);
     }
-  }, [user, getConfig]);
+<<<<<<< HEAD
+  }, [user, isAuthenticated, getConfig]);
 
   // Get single task
   const getTask = useCallback(async (id: string) => {
+    if (!isAuthenticated || !user) {
+      setError('Authentication required');
+      return;
+    }
+
+=======
+  };
+
+  // Get single task
+  const getTask = async (id: string) => {
+>>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
     try {
       setLoading(true);
+      setError(null);
+      
       const res = await axios.get(`${API_URL}/api/tasks/${id}`, getConfig());
       setTask(res.data);
-      setError(null);
     } catch (err: any) {
+      console.error('Error fetching task:', err);
       setError(
-        err.response && err.response.data.message
-          ? err.response.data.message
-          : 'Failed to fetch task'
+        err.response?.data?.message || 'Failed to fetch task'
       );
     } finally {
       setLoading(false);
     }
-  }, [getConfig]);
+<<<<<<< HEAD
+  }, [isAuthenticated, user, getConfig]);
 
   // Create new task
   const createTask = useCallback(async (taskData: Partial<Task>) => {
+    if (!isAuthenticated || !user) {
+      setError('Authentication required');
+      return;
+    }
+
+=======
+  };
+
+  // Create new task
+  const createTask = async (taskData: Partial<Task>) => {
+>>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
     try {
       setLoading(true);
-      const res = await axios.post(`${API_URL}/api/tasks`, taskData, getConfig());
-      setTasks(prevTasks => [...prevTasks, res.data]);
-      setSuccess(true);
       setError(null);
+      
+      const res = await axios.post(`${API_URL}/api/tasks`, taskData, getConfig());
+      setTasks([...tasks, res.data]);
+      setSuccess(true);
       
       // Reset success after 3 seconds
       setTimeout(() => {
@@ -127,30 +156,42 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }, 3000);
       
     } catch (err: any) {
+      console.error('Error creating task:', err);
       setError(
-        err.response && err.response.data.message
-          ? err.response.data.message
-          : 'Failed to create task'
+        err.response?.data?.message || 'Failed to create task'
       );
       setSuccess(false);
     } finally {
       setLoading(false);
     }
-  }, [getConfig]);
+<<<<<<< HEAD
+  }, [isAuthenticated, user, getConfig]);
 
   // Update task
   const updateTask = useCallback(async (id: string, taskData: Partial<Task>) => {
+    if (!isAuthenticated || !user) {
+      setError('Authentication required');
+      return;
+    }
+
+=======
+  };
+
+  // Update task
+  const updateTask = async (id: string, taskData: Partial<Task>) => {
+>>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
     try {
       setLoading(true);
+      setError(null);
+      
       const res = await axios.put(`${API_URL}/api/tasks/${id}`, taskData, getConfig());
       
-      setTasks(prevTasks =>
-        prevTasks.map((task) => (task._id === id ? res.data : task))
+      setTasks(
+        tasks.map((task) => (task._id === id ? res.data : task))
       );
       
       setTask(res.data);
       setSuccess(true);
-      setError(null);
       
       // Reset success after 3 seconds
       setTimeout(() => {
@@ -158,25 +199,37 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }, 3000);
       
     } catch (err: any) {
+      console.error('Error updating task:', err);
       setError(
-        err.response && err.response.data.message
-          ? err.response.data.message
-          : 'Failed to update task'
+        err.response?.data?.message || 'Failed to update task'
       );
       setSuccess(false);
     } finally {
       setLoading(false);
     }
-  }, [getConfig]);
+<<<<<<< HEAD
+  }, [isAuthenticated, user, getConfig]);
 
   // Delete task
   const deleteTask = useCallback(async (id: string) => {
+    if (!isAuthenticated || !user) {
+      setError('Authentication required');
+      return;
+    }
+
+=======
+  };
+
+  // Delete task
+  const deleteTask = async (id: string) => {
+>>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
     try {
       setLoading(true);
-      await axios.delete(`${API_URL}/api/tasks/${id}`, getConfig());
-      setTasks(prevTasks => prevTasks.filter((task) => task._id !== id));
-      setSuccess(true);
       setError(null);
+      
+      await axios.delete(`${API_URL}/api/tasks/${id}`, getConfig());
+      setTasks(tasks.filter((task) => task._id !== id));
+      setSuccess(true);
       
       // Reset success after 3 seconds
       setTimeout(() => {
@@ -184,37 +237,45 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }, 3000);
       
     } catch (err: any) {
+      console.error('Error deleting task:', err);
       setError(
-        err.response && err.response.data.message
-          ? err.response.data.message
-          : 'Failed to delete task'
+        err.response?.data?.message || 'Failed to delete task'
       );
       setSuccess(false);
     } finally {
       setLoading(false);
     }
-  }, [getConfig]);
+<<<<<<< HEAD
+  }, [isAuthenticated, user, getConfig]);
+=======
+  };
+>>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
 
   // Clear current task
-  const clearTask = useCallback(() => {
+  const clearTask = () => {
     setTask(null);
-  }, []);
-
-  // Clear errors
-  const clearError = useCallback(() => {
+<<<<<<< HEAD
     setError(null);
   }, []);
+=======
+  };
+>>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
+
+  // Clear errors
+  const clearError = () => {
+    setError(null);
+  };
 
   // Filter tasks by status
-  const filterTasks = useCallback((status: string) => {
+  const filterTasks = (status: string) => {
     if (status === 'All') {
       return tasks;
     }
     return tasks.filter((task) => task.status === status);
-  }, [tasks]);
+  };
 
   // Search tasks
-  const searchTasks = useCallback((searchTerm: string) => {
+  const searchTasks = (searchTerm: string) => {
     if (!searchTerm) {
       return tasks;
     }
@@ -225,10 +286,10 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
         task.title.toLowerCase().includes(term) ||
         (task.description && task.description.toLowerCase().includes(term))
     );
-  }, [tasks]);
+  };
 
   // Calculate task progress
-  const getTaskProgress = useCallback(() => {
+  const getTaskProgress = () => {
     if (tasks.length === 0) {
       return 0;
     }
@@ -238,17 +299,22 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     ).length;
     
     return Math.round((completedTasks / tasks.length) * 100);
-  }, [tasks]);
+  };
 
   // Load tasks when user changes
   useEffect(() => {
-    if (user) {
+    if (isAuthenticated && user) {
       getTasks();
     } else {
       setTasks([]);
-      setLoading(false);
+      setTask(null);
+      setError(null);
     }
-  }, [user, getTasks]);
+<<<<<<< HEAD
+  }, [isAuthenticated, user, getTasks]);
+=======
+  }, [user]);
+>>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
 
   return (
     <TaskContext.Provider

@@ -6,28 +6,18 @@ import { AuthContext } from '../context/AuthContext';
 import ProgressBar from '../components/tasks/ProgressBar';
 import TaskItem from '../components/tasks/TaskItem';
 
-interface Task {
-  _id: string;
-  title: string;
-  description?: string;
-  status: 'Pending' | 'In Progress' | 'Completed';
-  dueDate?: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
 const Dashboard: React.FC = () => {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, user } = useContext(AuthContext);
   const { tasks, getTasks, deleteTask, getTaskProgress } = useContext(TaskContext);
-  const [recentTasks, setRecentTasks] = useState<Task[]>([]);
-  const [upcomingTasks, setUpcomingTasks] = useState<Task[]>([]);
-  const [overdueTasks, setOverdueTasks] = useState<Task[]>([]);
+  const [recentTasks, setRecentTasks] = useState([]);
+  const [upcomingTasks, setUpcomingTasks] = useState([]);
+  const [overdueTasks, setOverdueTasks] = useState([]);
 
   useEffect(() => {
     if (isAuthenticated) {
       getTasks();
     }
-  }, [isAuthenticated, getTasks]);
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (tasks.length > 0) {
