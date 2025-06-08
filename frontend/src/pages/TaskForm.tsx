@@ -4,26 +4,37 @@ import { ArrowLeft, Save } from 'lucide-react';
 import { TaskContext } from '../context/TaskContext';
 import Alert from '../components/common/Alert';
 
+interface FormData {
+  title: string;
+  description: string;
+  status: 'Pending' | 'In Progress' | 'Completed';
+  dueDate: string;
+}
+
+interface FormErrors {
+  title: string;
+}
+
 const TaskForm: React.FC = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { task, getTask, createTask, updateTask, loading, error, success, clearTask } = useContext(TaskContext);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     title: '',
     description: '',
     status: 'Pending',
     dueDate: '',
   });
 
-  const [formErrors, setFormErrors] = useState({
+  const [formErrors, setFormErrors] = useState<FormErrors>({
     title: '',
   });
 
   const isEditMode = !!id;
 
   useEffect(() => {
-    if (isEditMode) {
+    if (isEditMode && id) {
       getTask(id);
     } else {
       clearTask();
@@ -32,7 +43,7 @@ const TaskForm: React.FC = () => {
     return () => {
       clearTask();
     };
-  }, [id]);
+  }, [id, isEditMode, getTask, clearTask]);
 
   useEffect(() => {
     if (task && isEditMode) {
@@ -51,7 +62,7 @@ const TaskForm: React.FC = () => {
     }
   }, [success, navigate]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -67,9 +78,9 @@ const TaskForm: React.FC = () => {
     }
   };
 
-  const validateForm = () => {
+  const validateForm = (): boolean => {
     let isValid = true;
-    const errors = {
+    const errors: FormErrors = {
       title: '',
     };
 
@@ -82,7 +93,7 @@ const TaskForm: React.FC = () => {
     return isValid;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -94,7 +105,7 @@ const TaskForm: React.FC = () => {
       dueDate: formData.dueDate || undefined,
     };
 
-    if (isEditMode) {
+    if (isEditMode && id) {
       updateTask(id, taskData);
     } else {
       createTask(taskData);

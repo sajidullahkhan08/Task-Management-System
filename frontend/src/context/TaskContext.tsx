@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext, useCallback } from 'react';
 import axios from 'axios';
 import { AuthContext } from './AuthContext';
 import { API_URL } from '../config';
@@ -59,22 +59,18 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const { user } = useContext(AuthContext);
 
   // Set up axios config with auth token
-  const getConfig = () => {
+  const getConfig = useCallback(() => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
+        ...(user?.token && { Authorization: `Bearer ${user.token}` }),
       },
     };
-
-    if (user && user.token) {
-      config.headers.Authorization = `Bearer ${user.token}`;
-    }
-
     return config;
-  };
+  }, [user]);
 
   // Get all tasks
-  const getTasks = async () => {
+  const getTasks = useCallback(async () => {
     try {
       setLoading(true);
       
@@ -96,10 +92,10 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } finally {
       setLoading(false);
     }
-  };
+  }, [user, getConfig]);
 
   // Get single task
-  const getTask = async (id: string) => {
+  const getTask = useCallback(async (id: string) => {
     try {
       setLoading(true);
       const res = await axios.get(`${API_URL}/api/tasks/${id}`, getConfig());
@@ -114,14 +110,14 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } finally {
       setLoading(false);
     }
-  };
+  }, [getConfig]);
 
   // Create new task
-  const createTask = async (taskData: Partial<Task>) => {
+  const createTask = useCallback(async (taskData: Partial<Task>) => {
     try {
       setLoading(true);
       const res = await axios.post(`${API_URL}/api/tasks`, taskData, getConfig());
-      setTasks([...tasks, res.data]);
+      setTasks(prevTasks => [...prevTasks, res.data]);
       setSuccess(true);
       setError(null);
       
@@ -140,16 +136,16 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } finally {
       setLoading(false);
     }
-  };
+  }, [getConfig]);
 
   // Update task
-  const updateTask = async (id: string, taskData: Partial<Task>) => {
+  const updateTask = useCallback(async (id: string, taskData: Partial<Task>) => {
     try {
       setLoading(true);
       const res = await axios.put(`${API_URL}/api/tasks/${id}`, taskData, getConfig());
       
-      setTasks(
-        tasks.map((task) => (task._id === id ? res.data : task))
+      setTasks(prevTasks =>
+        prevTasks.map((task) => (task._id === id ? res.data : task))
       );
       
       setTask(res.data);
@@ -171,14 +167,14 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } finally {
       setLoading(false);
     }
-  };
+  }, [getConfig]);
 
   // Delete task
-  const deleteTask = async (id: string) => {
+  const deleteTask = useCallback(async (id: string) => {
     try {
       setLoading(true);
       await axios.delete(`${API_URL}/api/tasks/${id}`, getConfig());
-      setTasks(tasks.filter((task) => task._id !== id));
+      setTasks(prevTasks => prevTasks.filter((task) => task._id !== id));
       setSuccess(true);
       setError(null);
       
@@ -197,28 +193,28 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } finally {
       setLoading(false);
     }
-  };
+  }, [getConfig]);
 
   // Clear current task
-  const clearTask = () => {
+  const clearTask = useCallback(() => {
     setTask(null);
-  };
+  }, []);
 
   // Clear errors
-  const clearError = () => {
+  const clearError = useCallback(() => {
     setError(null);
-  };
+  }, []);
 
   // Filter tasks by status
-  const filterTasks = (status: string) => {
+  const filterTasks = useCallback((status: string) => {
     if (status === 'All') {
       return tasks;
     }
     return tasks.filter((task) => task.status === status);
-  };
+  }, [tasks]);
 
   // Search tasks
-  const searchTasks = (searchTerm: string) => {
+  const searchTasks = useCallback((searchTerm: string) => {
     if (!searchTerm) {
       return tasks;
     }
@@ -229,10 +225,10 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
         task.title.toLowerCase().includes(term) ||
         (task.description && task.description.toLowerCase().includes(term))
     );
-  };
+  }, [tasks]);
 
   // Calculate task progress
-  const getTaskProgress = () => {
+  const getTaskProgress = useCallback(() => {
     if (tasks.length === 0) {
       return 0;
     }
@@ -242,7 +238,7 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     ).length;
     
     return Math.round((completedTasks / tasks.length) * 100);
-  };
+  }, [tasks]);
 
   // Load tasks when user changes
   useEffect(() => {
@@ -252,7 +248,7 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setTasks([]);
       setLoading(false);
     }
-  }, [user]);
+  }, [user, getTasks]);
 
   return (
     <TaskContext.Provider
