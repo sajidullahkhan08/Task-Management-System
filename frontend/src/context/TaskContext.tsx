@@ -52,11 +52,11 @@ export const TaskContext = createContext<TaskContextType>({
 export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [task, setTask] = useState<Task | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
 
-  const { user } = useContext(AuthContext);
+  const { user, isAuthenticated } = useContext(AuthContext);
 
   // Set up axios config with auth token
   const getConfig = useCallback(() => {
@@ -71,55 +71,65 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Get all tasks
   const getTasks = useCallback(async () => {
+    if (!isAuthenticated || !user) {
+      setTasks([]);
+      setLoading(false);
+      return;
+    }
+
     try {
       setLoading(true);
-      
-      if (!user) {
-        setTasks([]);
-        setLoading(false);
-        return;
-      }
+      setError(null);
       
       const res = await axios.get(`${API_URL}/api/tasks`, getConfig());
       setTasks(res.data);
-      setError(null);
     } catch (err: any) {
+      console.error('Error fetching tasks:', err);
       setError(
-        err.response && err.response.data.message
-          ? err.response.data.message
-          : 'Failed to fetch tasks'
+        err.response?.data?.message || 'Failed to fetch tasks'
       );
     } finally {
       setLoading(false);
     }
-  }, [user, getConfig]);
+  }, [user, isAuthenticated, getConfig]);
 
   // Get single task
   const getTask = useCallback(async (id: string) => {
+    if (!isAuthenticated || !user) {
+      setError('Authentication required');
+      return;
+    }
+
     try {
       setLoading(true);
+      setError(null);
+      
       const res = await axios.get(`${API_URL}/api/tasks/${id}`, getConfig());
       setTask(res.data);
-      setError(null);
     } catch (err: any) {
+      console.error('Error fetching task:', err);
       setError(
-        err.response && err.response.data.message
-          ? err.response.data.message
-          : 'Failed to fetch task'
+        err.response?.data?.message || 'Failed to fetch task'
       );
     } finally {
       setLoading(false);
     }
-  }, [getConfig]);
+  }, [isAuthenticated, user, getConfig]);
 
   // Create new task
   const createTask = useCallback(async (taskData: Partial<Task>) => {
+    if (!isAuthenticated || !user) {
+      setError('Authentication required');
+      return;
+    }
+
     try {
       setLoading(true);
+      setError(null);
+      
       const res = await axios.post(`${API_URL}/api/tasks`, taskData, getConfig());
       setTasks(prevTasks => [...prevTasks, res.data]);
       setSuccess(true);
-      setError(null);
       
       // Reset success after 3 seconds
       setTimeout(() => {
@@ -127,21 +137,27 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }, 3000);
       
     } catch (err: any) {
+      console.error('Error creating task:', err);
       setError(
-        err.response && err.response.data.message
-          ? err.response.data.message
-          : 'Failed to create task'
+        err.response?.data?.message || 'Failed to create task'
       );
       setSuccess(false);
     } finally {
       setLoading(false);
     }
-  }, [getConfig]);
+  }, [isAuthenticated, user, getConfig]);
 
   // Update task
   const updateTask = useCallback(async (id: string, taskData: Partial<Task>) => {
+    if (!isAuthenticated || !user) {
+      setError('Authentication required');
+      return;
+    }
+
     try {
       setLoading(true);
+      setError(null);
+      
       const res = await axios.put(`${API_URL}/api/tasks/${id}`, taskData, getConfig());
       
       setTasks(prevTasks =>
@@ -150,7 +166,6 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       setTask(res.data);
       setSuccess(true);
-      setError(null);
       
       // Reset success after 3 seconds
       setTimeout(() => {
@@ -158,25 +173,30 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }, 3000);
       
     } catch (err: any) {
+      console.error('Error updating task:', err);
       setError(
-        err.response && err.response.data.message
-          ? err.response.data.message
-          : 'Failed to update task'
+        err.response?.data?.message || 'Failed to update task'
       );
       setSuccess(false);
     } finally {
       setLoading(false);
     }
-  }, [getConfig]);
+  }, [isAuthenticated, user, getConfig]);
 
   // Delete task
   const deleteTask = useCallback(async (id: string) => {
+    if (!isAuthenticated || !user) {
+      setError('Authentication required');
+      return;
+    }
+
     try {
       setLoading(true);
+      setError(null);
+      
       await axios.delete(`${API_URL}/api/tasks/${id}`, getConfig());
       setTasks(prevTasks => prevTasks.filter((task) => task._id !== id));
       setSuccess(true);
-      setError(null);
       
       // Reset success after 3 seconds
       setTimeout(() => {
@@ -184,20 +204,20 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }, 3000);
       
     } catch (err: any) {
+      console.error('Error deleting task:', err);
       setError(
-        err.response && err.response.data.message
-          ? err.response.data.message
-          : 'Failed to delete task'
+        err.response?.data?.message || 'Failed to delete task'
       );
       setSuccess(false);
     } finally {
       setLoading(false);
     }
-  }, [getConfig]);
+  }, [isAuthenticated, user, getConfig]);
 
   // Clear current task
   const clearTask = useCallback(() => {
     setTask(null);
+    setError(null);
   }, []);
 
   // Clear errors
@@ -242,13 +262,14 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Load tasks when user changes
   useEffect(() => {
-    if (user) {
+    if (isAuthenticated && user) {
       getTasks();
     } else {
       setTasks([]);
-      setLoading(false);
+      setTask(null);
+      setError(null);
     }
-  }, [user, getTasks]);
+  }, [isAuthenticated, user, getTasks]);
 
   return (
     <TaskContext.Provider
