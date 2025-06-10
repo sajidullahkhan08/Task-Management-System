@@ -28,7 +28,7 @@ const Register: React.FC = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -36,7 +36,7 @@ const Register: React.FC = () => {
     });
 
     // Clear error when user types
-    if (formErrors[name]) {
+    if (formErrors[name as keyof typeof formErrors]) {
       setFormErrors({
         ...formErrors,
         [name]: '',
@@ -91,7 +91,7 @@ const Register: React.FC = () => {
     return isValid;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateForm()) {

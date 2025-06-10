@@ -24,7 +24,7 @@ const TaskList: React.FC = () => {
 
   useEffect(() => {
     getTasks();
-  }, []);
+  }, [getTasks]);
 
   useEffect(() => {
     // Apply filters

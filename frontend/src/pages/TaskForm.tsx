@@ -5,14 +5,14 @@ import { TaskContext } from '../context/TaskContext';
 import Alert from '../components/common/Alert';
 
 const TaskForm: React.FC = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { task, getTask, createTask, updateTask, loading, error, success, clearTask } = useContext(TaskContext);
 
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    status: 'Pending',
+    status: 'Pending' as 'Pending' | 'In Progress' | 'Completed',
     dueDate: '',
   });
 
@@ -22,23 +22,17 @@ const TaskForm: React.FC = () => {
 
   const isEditMode = !!id;
 
-  }, [id]);
->>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
-=======
+  useEffect(() => {
+    if (isEditMode && id) {
+      getTask(id);
+    } else {
+      clearTask();
+    }
+
+    return () => {
+      clearTask();
+    };
   }, [id, isEditMode, getTask, clearTask]);
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
-=======
-  }, [id, isEditMode, getTask, clearTask]);
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
-=======
-  }, [id]);
->>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
-=======
-  }, [id, isEditMode, getTask, clearTask]);
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
-=======
-  }, [id, isEditMode, getTask, clearTask]);
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
 
   useEffect(() => {
     if (task && isEditMode) {
@@ -57,7 +51,7 @@ const TaskForm: React.FC = () => {
     }
   }, [success, navigate]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -88,15 +82,7 @@ const TaskForm: React.FC = () => {
     return isValid;
   };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   const handleSubmit = async (e: React.FormEvent) => {
-  const handleSubmit = (e) => {
-
-=======
-  const handleSubmit = (e: React.FormEvent) => {
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
     e.preventDefault();
 
     if (!validateForm()) {
@@ -108,11 +94,10 @@ const TaskForm: React.FC = () => {
       dueDate: formData.dueDate || undefined,
     };
 
-<<<<<<< HEAD
     if (isEditMode && id) {
-      updateTask(id, taskData);
+      await updateTask(id, taskData);
     } else {
-      createTask(taskData);
+      await createTask(taskData);
     }
   };
 
