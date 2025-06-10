@@ -5,14 +5,14 @@ import { TaskContext } from '../context/TaskContext';
 import Alert from '../components/common/Alert';
 
 const TaskForm: React.FC = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { task, getTask, createTask, updateTask, loading, error, success, clearTask } = useContext(TaskContext);
 
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    status: 'Pending',
+    status: 'Pending' as 'Pending' | 'In Progress' | 'Completed',
     dueDate: '',
   });
 
@@ -23,8 +23,13 @@ const TaskForm: React.FC = () => {
   const isEditMode = !!id;
 
   useEffect(() => {
+<<<<<<< HEAD
     if (isEditMode) {
       getTask(id!);
+=======
+    if (isEditMode && id) {
+      getTask(id);
+>>>>>>> 1915c37c43606f081d01744cbafb0c4ddb36b949
     } else {
       clearTask();
     }
@@ -51,7 +56,7 @@ const TaskForm: React.FC = () => {
     }
   }, [success, navigate]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -82,7 +87,10 @@ const TaskForm: React.FC = () => {
     return isValid;
   };
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1915c37c43606f081d01744cbafb0c4ddb36b949
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -95,11 +103,14 @@ const TaskForm: React.FC = () => {
       dueDate: formData.dueDate || undefined,
     };
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1915c37c43606f081d01744cbafb0c4ddb36b949
     if (isEditMode && id) {
-      updateTask(id, taskData);
+      await updateTask(id, taskData);
     } else {
-      createTask(taskData);
+      await createTask(taskData);
     }
   };
 
