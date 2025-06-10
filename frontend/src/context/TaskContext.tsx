@@ -11,6 +11,16 @@ interface Task {
   dueDate?: string;
   createdAt: string;
   updatedAt: string;
+  owner?: {
+    _id: string;
+    name: string;
+    email: string;
+  };
+  sharedWith?: Array<{
+    _id: string;
+    name: string;
+    email: string;
+  }>;
 }
 
 interface TaskContextType {
@@ -24,6 +34,7 @@ interface TaskContextType {
   createTask: (taskData: Partial<Task>) => Promise<void>;
   updateTask: (id: string, taskData: Partial<Task>) => Promise<void>;
   deleteTask: (id: string) => Promise<void>;
+  shareTask: (id: string, userIds: string[]) => Promise<void>;
   clearTask: () => void;
   clearError: () => void;
   filterTasks: (status: string) => Task[];
@@ -42,6 +53,7 @@ export const TaskContext = createContext<TaskContextType>({
   createTask: async () => {},
   updateTask: async () => {},
   deleteTask: async () => {},
+  shareTask: async () => {},
   clearTask: () => {},
   clearError: () => {},
   filterTasks: () => [],
@@ -199,6 +211,40 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [getConfig]);
 
+  // Share task
+  const shareTask = useCallback(async (id: string, userIds: string[]) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(`${API_URL}/api/tasks/${id}/share`, { userIds }, getConfig());
+      
+      setTasks(prevTasks =>
+        prevTasks.map((task) => (task._id === id ? res.data : task))
+      );
+      
+      if (task && task._id === id) {
+        setTask(res.data);
+      }
+      
+      setSuccess(true);
+      setError(null);
+      
+      // Reset success after 3 seconds
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3000);
+      
+    } catch (err: any) {
+      setError(
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : 'Failed to share task'
+      );
+      setSuccess(false);
+    } finally {
+      setLoading(false);
+    }
+  }, [getConfig, task]);
+
   // Clear current task
   const clearTask = useCallback(() => {
     setTask(null);
@@ -268,6 +314,7 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
         createTask,
         updateTask,
         deleteTask,
+        shareTask,
         clearTask,
         clearError,
         filterTasks,
