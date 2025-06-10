@@ -22,23 +22,17 @@ const TaskForm: React.FC = () => {
 
   const isEditMode = !!id;
 
-  }, [id]);
->>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
-=======
+  useEffect(() => {
+    if (isEditMode) {
+      getTask(id!);
+    } else {
+      clearTask();
+    }
+
+    return () => {
+      clearTask();
+    };
   }, [id, isEditMode, getTask, clearTask]);
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
-=======
-  }, [id, isEditMode, getTask, clearTask]);
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
-=======
-  }, [id]);
->>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
-=======
-  }, [id, isEditMode, getTask, clearTask]);
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
-=======
-  }, [id, isEditMode, getTask, clearTask]);
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
 
   useEffect(() => {
     if (task && isEditMode) {
@@ -88,15 +82,8 @@ const TaskForm: React.FC = () => {
     return isValid;
   };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const handleSubmit = async (e: React.FormEvent) => {
-  const handleSubmit = (e) => {
 
-=======
-  const handleSubmit = (e: React.FormEvent) => {
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -108,7 +95,7 @@ const TaskForm: React.FC = () => {
       dueDate: formData.dueDate || undefined,
     };
 
-<<<<<<< HEAD
+
     if (isEditMode && id) {
       updateTask(id, taskData);
     } else {

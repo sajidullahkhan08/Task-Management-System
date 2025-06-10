@@ -64,7 +64,7 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     return config;
   };
-=======
+
   // Set up axios config with auth token
   const getConfig = useCallback(() => {
     const config = {
@@ -78,13 +78,12 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     return config;
-  };
+  }, [user]);
 
   // Get all tasks
-<<<<<<< HEAD
-=======
+
   // Get all tasks
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
+ parent of 3cdcf7a (Fix Task Management System Errors)
   const getTasks = useCallback(async () => {
     try {
       setLoading(true);
@@ -107,9 +106,6 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } finally {
       setLoading(false);
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   }, [user, isAuthenticated, getConfig]);
 
   // Get single task
@@ -119,24 +115,23 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return;
     }
 
-=======
   };
 
   // Get single task
   const getTask = async (id: string) => {
->>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
-=======
+ parent of 5f28930 (Fix Task Management System Code Errors)
+
   }, [user, getConfig]);
 
   // Get single task
   const getTask = useCallback(async (id: string) => {
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
-=======
+ parent of 3cdcf7a (Fix Task Management System Errors)
+
   }, [user, getConfig]);
 
   // Get single task
   const getTask = useCallback(async (id: string) => {
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
+ parent of 3cdcf7a (Fix Task Management System Errors)
     try {
       setLoading(true);
       const res = await axios.get(`${API_URL}/api/tasks/${id}`, getConfig());
@@ -151,9 +146,7 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } finally {
       setLoading(false);
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
   }, [isAuthenticated, user, getConfig]);
 
   // Create new task
@@ -162,25 +155,23 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setError('Authentication required');
       return;
     }
-
-=======
   };
 
   // Create new task
   const createTask = async (taskData: Partial<Task>) => {
->>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
-=======
+ parent of 5f28930 (Fix Task Management System Code Errors)
+
   }, [getConfig]);
 
   // Create new task
   const createTask = useCallback(async (taskData: Partial<Task>) => {
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
-=======
+ parent of 3cdcf7a (Fix Task Management System Errors)
+
   }, [getConfig]);
 
   // Create new task
   const createTask = useCallback(async (taskData: Partial<Task>) => {
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
+ parent of 3cdcf7a (Fix Task Management System Errors)
     try {
       setLoading(true);
       const res = await axios.post(`${API_URL}/api/tasks`, taskData, getConfig());
@@ -203,9 +194,9 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } finally {
       setLoading(false);
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
+
+
   }, [isAuthenticated, user, getConfig]);
 
   // Update task
@@ -215,24 +206,24 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return;
     }
 
-=======
+
   };
 
   // Update task
   const updateTask = async (id: string, taskData: Partial<Task>) => {
->>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
-=======
+ parent of 5f28930 (Fix Task Management System Code Errors)
+
   }, [getConfig]);
 
   // Update task
   const updateTask = useCallback(async (id: string, taskData: Partial<Task>) => {
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
-=======
+ parent of 3cdcf7a (Fix Task Management System Errors)
+
   }, [getConfig]);
 
   // Update task
   const updateTask = useCallback(async (id: string, taskData: Partial<Task>) => {
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
+ parent of 3cdcf7a (Fix Task Management System Errors)
     try {
       setLoading(true);
       const res = await axios.put(`${API_URL}/api/tasks/${id}`, taskData, getConfig());
@@ -260,9 +251,7 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } finally {
       setLoading(false);
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
   }, [isAuthenticated, user, getConfig]);
 
   // Delete task
@@ -272,13 +261,13 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return;
     }
 
-=======
+
   };
 
   // Delete task
   const deleteTask = async (id: string) => {
->>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
-=======
+ parent of 5f28930 (Fix Task Management System Code Errors)
+
   }, [getConfig]);
 
   // Delete task
@@ -289,7 +278,7 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Delete task
   const deleteTask = useCallback(async (id: string) => {
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
+ parent of 3cdcf7a (Fix Task Management System Errors)
     try {
       setLoading(true);
       await axios.delete(`${API_URL}/api/tasks/${id}`, getConfig());
@@ -312,35 +301,30 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } finally {
       setLoading(false);
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
   }, [isAuthenticated, user, getConfig]);
-=======
+
   };
->>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
-=======
+ parent of 5f28930 (Fix Task Management System Code Errors)
+
   }, [getConfig]);
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
-=======
+ parent of 3cdcf7a (Fix Task Management System Errors)
+
   }, [getConfig]);
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
+ parent of 3cdcf7a (Fix Task Management System Errors)
 
   // Clear current task
   const clearTask = () => {
     setTask(null);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     setError(null);
+
+ parent of 3cdcf7a (Fix Task Management System Errors)
 =======
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
-=======
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
+ parent of 3cdcf7a (Fix Task Management System Errors)
   }, []);
 =======
   };
->>>>>>> parent of 5f28930 (Fix Task Management System Code Errors)
+ parent of 5f28930 (Fix Task Management System Code Errors)
 
   // Clear errors
   const clearError = () => {
@@ -390,13 +374,10 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setTasks([]);
       setLoading(false);
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   }, [isAuthenticated, user, getTasks]);
-=======
+
   }, [user, getTasks]);
->>>>>>> parent of 3cdcf7a (Fix Task Management System Errors)
+ parent of 3cdcf7a (Fix Task Management System Errors)
 
   }, [user]);
 
