@@ -103,14 +103,14 @@ const Register: React.FC = () => {
 
   return (
     <div className="max-w-md mx-auto">
-      <div className="bg-white rounded-lg shadow-md p-8">
-        <h1 className="text-2xl font-bold mb-6 text-center">Register</h1>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 transition-colors">
+        <h1 className="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white">Register</h1>
 
         {error && <Alert type="error" message={error} onClose={clearError} />}
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="name" className="form-label">
+            <label htmlFor="name" className="form-label dark:text-gray-300">
               Name
             </label>
             <input
@@ -128,7 +128,7 @@ const Register: React.FC = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="email" className="form-label">
+            <label htmlFor="email" className="form-label dark:text-gray-300">
               Email
             </label>
             <input
@@ -146,7 +146,7 @@ const Register: React.FC = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="password" className="form-label">
+            <label htmlFor="password" className="form-label dark:text-gray-300">
               Password
             </label>
             <input
@@ -164,7 +164,7 @@ const Register: React.FC = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="confirmPassword" className="form-label">
+            <label htmlFor="confirmPassword" className="form-label dark:text-gray-300">
               Confirm Password
             </label>
             <input
@@ -190,9 +190,9 @@ const Register: React.FC = () => {
           </button>
         </form>
 
-        <p className="mt-6 text-center text-gray-600">
+        <p className="mt-6 text-center text-gray-600 dark:text-gray-300">
           Already have an account?{' '}
-          <Link to="/login" className="text-blue-600 hover:underline">
+          <Link to="/login" className="text-blue-600 dark:text-blue-400 hover:underline">
             Login
           </Link>
         </p>

@@ -55,9 +55,9 @@ const TaskList: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-gray-50 p-6 rounded-lg shadow-sm">
+    <div className="max-w-4xl mx-auto bg-gray-50 dark:bg-gray-900 p-6 rounded-lg shadow-sm transition-colors">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">My Tasks</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">My Tasks</h1>
         <Link to="/tasks/new" className="btn btn-primary flex items-center">
           <PlusCircle className="h-5 w-5 mr-1" />
           New Task
@@ -77,8 +77,8 @@ const TaskList: React.FC = () => {
       />
 
       {filteredTasks.length === 0 ? (
-        <div className="bg-white rounded-lg shadow-md p-8 text-center">
-          <p className="text-gray-500 mb-4">No tasks found</p>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 text-center">
+          <p className="text-gray-500 dark:text-gray-400 mb-4">No tasks found</p>
           <Link to="/tasks/new" className="btn btn-primary inline-flex items-center">
             <PlusCircle className="h-5 w-5 mr-1" />
             Create your first task

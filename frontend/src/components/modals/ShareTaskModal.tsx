@@ -43,10 +43,33 @@ const ShareTaskModal: React.FC<ShareTaskModalProps> = ({
     try {
       setLoading(true);
       setError(null);
-      
-      // In a real implementation, you'd need to convert emails to user IDs
-      // For now, we'll assume the backend can handle email-to-ID conversion
-      await shareTask(taskId, emailList);
+
+      // Convert emails to user IDs by calling backend API
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const res = await fetch(`${apiUrl}/api/users/ids-by-emails`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem('user') || '{}').token || ''}`,
+        },
+        body: JSON.stringify({ emails: emailList }),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || 'Failed to fetch user IDs');
+      }
+
+      const users = await res.json();
+      const userIds = users.map((user: { _id: string }) => user._id);
+
+      if (userIds.length === 0) {
+        setError('No users found for the provided email addresses');
+        setLoading(false);
+        return;
+      }
+
+      await shareTask(taskId, userIds);
       
       setSuccess(true);
       setTimeout(() => {
@@ -55,7 +78,7 @@ const ShareTaskModal: React.FC<ShareTaskModalProps> = ({
         setEmails('');
       }, 2000);
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to share task');
+      setError(err.message || 'Failed to share task');
     } finally {
       setLoading(false);
     }

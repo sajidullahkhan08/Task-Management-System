@@ -45,12 +45,12 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete }) => {
   };
 
   return (
-    <div className="card p-4 mb-4 hover:shadow-lg transition-shadow duration-200">
+    <div className="card p-4 mb-4 hover:shadow-lg transition-shadow duration-200 bg-white dark:bg-gray-800 transition-colors">
       <div className="flex justify-between items-start">
         <div>
-          <h3 className="text-lg font-semibold mb-1">{task.title}</h3>
+          <h3 className="text-lg font-semibold mb-1 text-gray-900 dark:text-white">{task.title}</h3>
           {task.description && (
-            <p className="text-gray-600 mb-2 line-clamp-2">{task.description}</p>
+            <p className="text-gray-600 dark:text-gray-300 mb-2 line-clamp-2">{task.description}</p>
           )}
           <ProgressBar progress={getProgressFromStatus(task.status)} showDescription={false} />
           <div className="flex flex-wrap items-center gap-3 mt-2">
@@ -58,12 +58,12 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete }) => {
               {task.status}
             </span>
             {task.dueDate && (
-              <div className="flex items-center text-sm text-gray-500">
+              <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
                 <Clock className="h-4 w-4 mr-1" />
                 <span>Due: {format(new Date(task.dueDate), 'MMM d, yyyy')}</span>
               </div>
             )}
-            <span className="text-xs text-gray-500">
+            <span className="text-xs text-gray-500 dark:text-gray-400">
               Created: {format(new Date(task.createdAt), 'MMM d, yyyy')}
             </span>
           </div>
@@ -71,14 +71,14 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete }) => {
         <div className="flex space-x-2">
           <Link
             to={`/tasks/edit/${task._id}`}
-            className="p-2 text-blue-600 hover:text-blue-800 transition-colors"
+            className="p-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
             title="Edit Task"
           >
             <Edit className="h-5 w-5" />
           </Link>
           <button
             onClick={() => onDelete(task._id)}
-            className="p-2 text-red-600 hover:text-red-800 transition-colors"
+            className="p-2 text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 transition-colors"
             title="Delete Task"
           >
             <Trash2 className="h-5 w-5" />

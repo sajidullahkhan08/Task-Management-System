@@ -65,9 +65,9 @@ const Dashboard: React.FC = () => {
   if (!isAuthenticated) {
     return (
       <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-lg shadow-md p-8 text-center">
-          <h1 className="text-3xl font-bold mb-6">Welcome to TaskMaster</h1>
-          <p className="text-xl text-gray-600 mb-8">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 text-center transition-colors">
+          <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Welcome to TaskMaster</h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
             The ultimate task management solution to boost your productivity
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
@@ -87,24 +87,24 @@ const Dashboard: React.FC = () => {
         </div>
 
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white rounded-lg shadow-md p-6 text-center">
-            <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Track Progress</h3>
-            <p className="text-gray-600">
+          <div className="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6 text-center transition-colors">
+            <CheckCircle className="h-12 w-12 text-green-500 dark:text-green-400 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Track Progress</h3>
+            <p className="text-gray-600 dark:text-gray-300">
               Monitor your task completion and stay on top of your goals
             </p>
           </div>
-          <div className="bg-white rounded-lg shadow-md p-6 text-center">
-            <Clock className="h-12 w-12 text-blue-500 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Manage Deadlines</h3>
-            <p className="text-gray-600">
+          <div className="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6 text-center transition-colors">
+            <Clock className="h-12 w-12 text-blue-500 dark:text-blue-400 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Manage Deadlines</h3>
+            <p className="text-gray-600 dark:text-gray-300">
               Never miss a deadline with our intuitive due date tracking
             </p>
           </div>
-          <div className="bg-white rounded-lg shadow-md p-6 text-center">
-            <AlertCircle className="h-12 w-12 text-purple-500 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Stay Organized</h3>
-            <p className="text-gray-600">
+          <div className="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6 text-center transition-colors">
+            <AlertCircle className="h-12 w-12 text-purple-500 dark:text-purple-400 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Stay Organized</h3>
+            <p className="text-gray-600 dark:text-gray-300">
               Keep all your tasks organized with custom statuses and categories
             </p>
           </div>
@@ -116,7 +116,7 @@ const Dashboard: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Dashboard</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
         <Link to="/tasks/new" className="btn btn-primary flex items-center">
           <PlusCircle className="h-5 w-5 mr-1" />
           New Task
@@ -127,10 +127,10 @@ const Dashboard: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {/* Upcoming Tasks */}
-        <div className="bg-white rounded-lg shadow-md p-4">
+        <div className="bg-white dark:bg-gray-700 rounded-lg shadow-md p-4 transition-colors">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold">Upcoming Tasks</h2>
-            <Link to="/tasks" className="text-blue-600 text-sm hover:underline">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Upcoming Tasks</h2>
+            <Link to="/tasks" className="text-blue-600 dark:text-blue-400 text-sm hover:underline">
               View All
             </Link>
           </div>
@@ -139,15 +139,15 @@ const Dashboard: React.FC = () => {
               <TaskItem key={task._id} task={task} onDelete={deleteTask} />
             ))
           ) : (
-            <p className="text-gray-500 text-center py-4">No upcoming tasks</p>
+            <p className="text-gray-500 dark:text-gray-400 text-center py-4">No upcoming tasks</p>
           )}
         </div>
 
         {/* Overdue Tasks */}
-        <div className="bg-white rounded-lg shadow-md p-4">
+        <div className="bg-white dark:bg-gray-700 rounded-lg shadow-md p-4 transition-colors">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold text-red-600">Overdue Tasks</h2>
-            <Link to="/tasks" className="text-blue-600 text-sm hover:underline">
+            <h2 className="text-lg font-semibold text-red-600 dark:text-red-400">Overdue Tasks</h2>
+            <Link to="/tasks" className="text-blue-600 dark:text-blue-400 text-sm hover:underline">
               View All
             </Link>
           </div>
@@ -156,16 +156,16 @@ const Dashboard: React.FC = () => {
               <TaskItem key={task._id} task={task} onDelete={deleteTask} />
             ))
           ) : (
-            <p className="text-gray-500 text-center py-4">No overdue tasks</p>
+            <p className="text-gray-500 dark:text-gray-400 text-center py-4">No overdue tasks</p>
           )}
         </div>
       </div>
 
       {/* Recent Tasks */}
-      <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+      <div className="bg-white dark:bg-gray-700 rounded-lg shadow-md p-4 mb-6 transition-colors">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-semibold">Recent Tasks</h2>
-          <Link to="/tasks" className="text-blue-600 text-sm hover:underline">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Recent Tasks</h2>
+          <Link to="/tasks" className="text-blue-600 dark:text-blue-400 text-sm hover:underline">
             View All
           </Link>
         </div>
@@ -174,7 +174,7 @@ const Dashboard: React.FC = () => {
             <TaskItem key={task._id} task={task} onDelete={deleteTask} />
           ))
         ) : (
-          <p className="text-gray-500 text-center py-4">No tasks created yet</p>
+          <p className="text-gray-500 dark:text-gray-400 text-center py-4">No tasks created yet</p>
         )}
       </div>
     </div>

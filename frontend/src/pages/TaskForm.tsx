@@ -110,8 +110,8 @@ const TaskForm: React.FC = () => {
         </Link>
       </div>
 
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-2xl font-bold mb-6">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-colors">
+        <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
           {isEditMode ? 'Edit Task' : 'Create New Task'}
         </h1>
 
@@ -119,7 +119,7 @@ const TaskForm: React.FC = () => {
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="title" className="form-label">
+            <label htmlFor="title" className="form-label dark:text-gray-300">
               Title <span className="text-red-500">*</span>
             </label>
             <input
@@ -137,7 +137,7 @@ const TaskForm: React.FC = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="description" className="form-label">
+            <label htmlFor="description" className="form-label dark:text-gray-300">
               Description
             </label>
             <textarea
@@ -153,7 +153,7 @@ const TaskForm: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="form-group">
-              <label htmlFor="status" className="form-label">
+              <label htmlFor="status" className="form-label dark:text-gray-300">
                 Status
               </label>
               <select
@@ -170,7 +170,7 @@ const TaskForm: React.FC = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="dueDate" className="form-label">
+              <label htmlFor="dueDate" className="form-label dark:text-gray-300">
                 Due Date
               </label>
               <input

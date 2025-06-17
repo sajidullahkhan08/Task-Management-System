@@ -14,19 +14,19 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ progress, showDescription = t
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 mb-6 transition-colors">
       <div className="flex justify-between items-center mb-2">
-        <h3 className="text-lg font-semibold">Task Progress</h3>
-        <span className="text-gray-700 font-medium">{progress}%</span>
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Task Progress</h3>
+        <span className="text-gray-700 dark:text-gray-300 font-medium">{progress}%</span>
       </div>
-      <div className="w-full bg-gray-200 rounded-full h-2.5">
+      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
         <div
           className={`h-2.5 rounded-full ${getColorClass()}`}
           style={{ width: `${progress}%` }}
         ></div>
       </div>
       {showDescription && (
-        <p className="text-sm text-gray-600 mt-2">
+        <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
           {progress === 0
             ? 'No tasks completed yet. Start working on your tasks!'
             : progress === 100
