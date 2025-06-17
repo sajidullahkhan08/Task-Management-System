@@ -23,13 +23,8 @@ const TaskForm: React.FC = () => {
   const isEditMode = !!id;
 
   useEffect(() => {
-<<<<<<< HEAD
-    if (isEditMode) {
-      getTask(id!);
-=======
     if (isEditMode && id) {
       getTask(id);
->>>>>>> 1915c37c43606f081d01744cbafb0c4ddb36b949
     } else {
       clearTask();
     }
@@ -87,10 +82,6 @@ const TaskForm: React.FC = () => {
     return isValid;
   };
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 1915c37c43606f081d01744cbafb0c4ddb36b949
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -103,10 +94,6 @@ const TaskForm: React.FC = () => {
       dueDate: formData.dueDate || undefined,
     };
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 1915c37c43606f081d01744cbafb0c4ddb36b949
     if (isEditMode && id) {
       await updateTask(id, taskData);
     } else {
