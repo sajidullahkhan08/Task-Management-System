@@ -11,80 +11,61 @@ import userRoutes from './routes/userRoutes.js';
 import analyticsRoutes from './routes/analyticsRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
 
-// Load .env variables
-console.log("🌱 Loading environment variables...");
 dotenv.config();
 
 // Connect to MongoDB
-console.log("🔌 Connecting to MongoDB...");
 connectDB();
 
-console.log("🚀 Setting up Express app...");
 const app = express();
 const server = createServer(app);
-
-// Setup Socket.IO with production-friendly CORS
-console.log("⚡ Setting up Socket.IO...");
 const io = new Server(server, {
   cors: {
-    origin: process.env.NODE_ENV === 'production'
-      ? 'https://task-management-system-production-505f.up.railway.app' // ✅ Replace with your actual frontend URL
-      : 'http://localhost:5173',
+    origin: process.env.NODE_ENV === 'production' ? false : ['http://localhost:5173'],
     methods: ['GET', 'POST'],
-    credentials: true,
   },
 });
 
-// Authenticate and listen to Socket.IO
+// Socket.IO authentication and connection handling
 io.use(socketAuth);
 
 io.on('connection', (socket) => {
-  console.log(`✅ Socket connected: ${socket.user?.name}`);
-
-  // Join room
+  console.log(`User ${socket.user.name} connected`);
+  
+  // Join user to their own room for targeted notifications
   socket.join(socket.userId);
 
   socket.on('disconnect', () => {
-    console.log(`❌ Socket disconnected: ${socket.user?.name}`);
+    console.log(`User ${socket.user.name} disconnected`);
   });
 });
 
-// Attach io instance to request
+// Middleware to attach io to request object
 app.use((req, res, next) => {
   req.io = io;
   next();
 });
 
-// Global middleware
-console.log("🧱 Mounting middleware...");
+// Middleware
 app.use(cors());
 app.use(express.json());
 
 // Routes
-console.log("📦 Mounting routes...");
 app.use('/api/tasks', taskRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/notifications', notificationRoutes);
 
-// Health check route
-app.get('/', (req, res) => {
-  res.send('✅ Server is alive!');
-});
-
-// API status check
+// API status route
 app.get('/api', (req, res) => {
-  res.json({ message: '✅ API is running...' });
+  res.json({ message: 'API is running...' });
 });
 
-// Error handling middleware
+// Error Middleware
 app.use(notFound);
 app.use(errorHandler);
 
-// Start server
 const PORT = process.env.PORT || 5000;
-console.log(`🎧 About to listen on port ${PORT}...`);
 
 server.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
