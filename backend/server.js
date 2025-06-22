@@ -18,10 +18,15 @@ connectDB();
 
 const app = express();
 const server = createServer(app);
+
+// Setup Socket.IO with proper CORS
 const io = new Server(server, {
   cors: {
-    origin: process.env.NODE_ENV === 'production' ? false : ['http://localhost:5173'],
+    origin: process.env.NODE_ENV === 'production'
+      ? 'https://task-management-system-production-bfd7.up.railway.app'  // 🔁 Replace with your actual frontend URL
+      : 'http://localhost:5173',
     methods: ['GET', 'POST'],
+    credentials: true,
   },
 });
 
@@ -30,7 +35,7 @@ io.use(socketAuth);
 
 io.on('connection', (socket) => {
   console.log(`User ${socket.user.name} connected`);
-  
+
   // Join user to their own room for targeted notifications
   socket.join(socket.userId);
 
@@ -55,7 +60,12 @@ app.use('/api/users', userRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/notifications', notificationRoutes);
 
-// API status route
+// Health Check Route for Railway
+app.get('/', (req, res) => {
+  res.send('Server is alive!');
+});
+
+// API Status Route
 app.get('/api', (req, res) => {
   res.json({ message: 'API is running...' });
 });
@@ -64,8 +74,9 @@ app.get('/api', (req, res) => {
 app.use(notFound);
 app.use(errorHandler);
 
+// Dynamic Port for Railway or localhost fallback
 const PORT = process.env.PORT || 5000;
 
 server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
