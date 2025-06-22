@@ -4,11 +4,11 @@
   "description": "A fully functional Task Management System using the MERN stack",
   "type": "module",
   "scripts": {
-    "start": "node backend/server.js",
+    "start": "cd backend && npm install && npm start",
     "server": "nodemon backend/server.js",
     "client": "npm run dev --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "build": "npm run build --prefix frontend"
+    "build": "cd frontend && npm install && npm run build"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
