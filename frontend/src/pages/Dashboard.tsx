@@ -108,6 +108,48 @@ const Dashboard: React.FC = () => {
               Keep all your tasks organized with custom statuses and categories
             </p>
           </div>
+          <div className="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6 text-center transition-colors">
+            <PlusCircle className="h-12 w-12 text-indigo-500 dark:text-indigo-400 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">User Authentication</h3>
+            <p className="text-gray-600 dark:text-gray-300">
+              Secure registration and login with JWT authentication
+            </p>
+          </div>
+          <div className="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6 text-center transition-colors">
+            <AlertCircle className="h-12 w-12 text-pink-500 dark:text-pink-400 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Task Sharing</h3>
+            <p className="text-gray-600 dark:text-gray-300">
+              Share tasks with other users easily via email invitations
+            </p>
+          </div>
+          <div className="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6 text-center transition-colors">
+            <Clock className="h-12 w-12 text-yellow-500 dark:text-yellow-400 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Real-Time Notifications</h3>
+            <p className="text-gray-600 dark:text-gray-300">
+              Stay updated with instant notifications on task changes and shares
+            </p>
+          </div>
+          <div className="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6 text-center transition-colors">
+            <CheckCircle className="h-12 w-12 text-cyan-500 dark:text-cyan-400 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Analytics Dashboard</h3>
+            <p className="text-gray-600 dark:text-gray-300">
+              Gain insights with task analytics and trends visualization
+            </p>
+          </div>
+          <div className="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6 text-center transition-colors">
+            <AlertCircle className="h-12 w-12 text-gray-500 dark:text-gray-400 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Dark Mode Support</h3>
+            <p className="text-gray-600 dark:text-gray-300">
+              Enjoy a comfortable viewing experience with dark mode toggle
+            </p>
+          </div>
+          <div className="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6 text-center transition-colors">
+            <AlertCircle className="h-12 w-12 text-red-500 dark:text-red-400 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Alerts & Feedback</h3>
+            <p className="text-gray-600 dark:text-gray-300">
+              Receive clear success and error alerts for your actions
+            </p>
+          </div>
         </div>
       </div>
     );
