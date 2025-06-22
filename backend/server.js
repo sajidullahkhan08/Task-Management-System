@@ -23,7 +23,7 @@ const server = createServer(app);
 const io = new Server(server, {
   cors: {
     origin: process.env.NODE_ENV === 'production'
-      ? 'https://task-management-system-production-bfd7.up.railway.app'  // 🔁 Replace with your actual frontend URL
+      ? 'https://task-management-system-production-505f.up.railway.app'  // 🔁 Replace with your actual frontend URL
       : 'http://localhost:5173',
     methods: ['GET', 'POST'],
     credentials: true,
