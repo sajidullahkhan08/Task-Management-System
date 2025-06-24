@@ -12,6 +12,10 @@ ID: DHC-1508
 
 ---
 
+## Live
+[Task Management System](https://task-management-system-z6e4.vercel.app)
+
+
 ## Technologies Used
 
 ### Backend
@@ -43,6 +47,8 @@ ID: DHC-1508
   /routes          # Express routes (taskRoutes, userRoutes)
   /utils           # Utility functions (e.g., token generation)
   server.js        # Backend server entry point
+  package.json     # Backend dependencies and scripts
+  package-lock.json # Backend dependencies lockfile
 
 /frontend
   /src
@@ -145,7 +151,15 @@ All API endpoints require JWT authentication via the `Authorization` header as `
 
 ## Screenshots
 
-*(Add screenshots of key features here, e.g., login page, task list, task form, sharing modal, notifications)*
+*![alt text](image0.png)
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
+![alt text](image-3.png)
+![alt text](image-4.png)
+![alt text](image-5.png)
+![alt text](image-6.png)
+*
 
 ---
 
